@@ -1,0 +1,16 @@
+site_name: Sanctuary DMX
+site_description: Setup and operations guide for the Sanctuary DMX lighting system
+site_author: Sanctuary Tech Team
+
+theme:
+  name: readthedocs
+
+nav:
+  - Home: sanctuary-dmx-setup.md
+
+markdown_extensions:
+  - toc:
+      permalink: true
+  - admonition
+  - tables
+  - fenced_code
