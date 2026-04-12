@@ -1,0 +1,13 @@
+[Unit]
+Description=MkDocs Wiki
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/mkdocs serve --dev-addr=0.0.0.0:8000
+WorkingDirectory=/home/pi/Documents/sanctuarydmx
+Restart=on-failure
+RestartSec=5
+User=pi
+
+[Install]
+WantedBy=multi-user.target
