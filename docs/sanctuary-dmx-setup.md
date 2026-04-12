@@ -87,7 +87,7 @@ After=network.target
 
 [Service]
 Environment=QT_QPA_PLATFORM=offscreen
-ExecStart=/usr/bin/qlcplus --web --nowm --operate --open /home/pi/show.qxw
+ExecStart=/usr/bin/qlcplus --web --nowm --operate --open /home/pi/Documents/sanctuary_lights.qxw
 Restart=on-failure
 RestartSec=5
 User=pi
@@ -129,7 +129,7 @@ sudo systemctl stop qlcplus
 qlcplus
 ```
 
-4. Design your show, then **save the project to `/home/pi/show.qxw`**
+4. Design your show, then **save the project to `/home/pi/Documents/sanctuary_lights.qxw`**
 
 5. Exit QLC+ and restart the service:
 
@@ -144,7 +144,7 @@ The new project will be loaded automatically on the next boot, or immediately vi
 If designing on a separate laptop, copy the project file to the Pi with:
 
 ```bash
-scp yourshow.qxw pi@sanctuary_dmx.local:/home/pi/show.qxw
+scp yourshow.qxw pi@sanctuary_dmx.local:/home/pi/Documents/sanctuary_lights.qxw
 ```
 
 Then restart the service:
