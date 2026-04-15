@@ -1,13 +1,17 @@
 from enum import Enum
 from gpiozero import Button
-import requests
 import time
+import websocket
 
-QLC_BASE = "http://localhost:9999/api"
+QLC_WS = "ws://localhost:9999/qlcplusWS"
 
 
 class QlcFunctions(Enum):
-    BLACKOUT = 1
+    BLACKOUT = 4
+    RED = 0
+    GREEN = 1
+    BLUE = 2
+    LIGHT_BLUE = 3
 
 
 # Map GPIO pin → QLC+ function ID
@@ -18,7 +22,9 @@ BUTTON_MAP = {
 
 def fire_qlc_function(qlc_function):
     print(f"Firing {qlc_function}")
-    # requests.get(f"{QLC_BASE}/functionSetRunning?id={func_id}&running=true")
+    ws = websocket.create_connection(QLC_WS)
+    ws.send(f"QLC+API|setFunctionRunning|{qlc_function.value}|255")
+    ws.close()
 
 
 buttons = {}
