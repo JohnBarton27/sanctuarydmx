@@ -23,7 +23,7 @@ BUTTON_MAP = {
 def fire_qlc_function(qlc_function):
     print(f"Firing {qlc_function}")
     ws = websocket.create_connection(QLC_WS)
-    ws.send(f"QLC+API|setFunctionRunning|{qlc_function.value}|1")
+    ws.send(f"QLC+API|setFunctionStatus|{qlc_function.value}|255")
     ws.close()
 
 
