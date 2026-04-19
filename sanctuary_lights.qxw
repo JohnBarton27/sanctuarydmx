@@ -170,8 +170,8 @@
     <Disabled>False</Disabled>
     <Multipage PagesNum="3" CurrentPage="0"/>
     <Shortcut Page="0" Name="BOTH"/>
-    <Shortcut Page="1" Name="LEFT"/>
-    <Shortcut Page="2" Name="RIGHT"/>
+    <Shortcut Page="1" Name="RIGHT"/>
+    <Shortcut Page="2" Name="LEFT"/>
     <PagesLoop>False</PagesLoop>
     <Slider Caption="Dimmer" ID="0" WidgetStyle="Slider" InvertedAppearance="false">
      <WindowState Visible="True" X="15" Y="60" Width="60" Height="200"/>
