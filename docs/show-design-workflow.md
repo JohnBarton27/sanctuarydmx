@@ -20,7 +20,7 @@ QLC+ show design must be done in the full desktop application — the web interf
     qlcplus
     ```
 
-4. Design your show, then **save the project to `/home/pi/Documents/sanctuary_lights.qxw`**
+4. Design your show, then **save the project to `/home/pi/Documents/sanctuarydmx/sanctuary_lights.qxw`**
 
 5. Exit QLC+ and restart the service:
 
@@ -35,7 +35,7 @@ The new project will be loaded automatically on the next boot, or immediately vi
 If designing on a separate laptop, copy the project file to the Pi with:
 
 ```bash
-scp yourshow.qxw pi@sanctuary_dmx.local:/home/pi/Documents/sanctuary_lights.qxw
+scp yourshow.qxw pi@sanctuary_dmx.local:/home/pi/Documents/sanctuarydmx/sanctuary_lights.qxw
 ```
 
 Then restart the service:

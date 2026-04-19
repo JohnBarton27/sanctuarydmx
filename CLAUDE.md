@@ -44,8 +44,8 @@ mkdocs build        # build static site to site/
 
 ## Deployment Notes
 
-- QLC+ project file lives at `/home/pi/Documents/sanctuary_lights.qxw` on the Pi
+- QLC+ project file lives at `/home/pi/Documents/sanctuarydmx/sanctuary_lights.qxw` on the Pi
 - Show design must be done in the full desktop app (not the web UI); use SSH X11 forwarding: `ssh -X pi@sanctuary_dmx.local`
 - Stop the service before designing: `sudo systemctl stop qlcplus`, restart after: `sudo systemctl start qlcplus`
-- Transfer a project file: `scp yourshow.qxw pi@sanctuary_dmx.local:/home/pi/Documents/sanctuary_lights.qxw`
+- Transfer a project file: `scp yourshow.qxw pi@sanctuary_dmx.local:/home/pi/Documents/sanctuarydmx/sanctuary_lights.qxw`
 - Web UI: `http://sanctuary_dmx.local:9999`

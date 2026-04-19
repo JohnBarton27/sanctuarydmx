@@ -54,7 +54,7 @@ After=network.target
 
 [Service]
 Environment=QT_QPA_PLATFORM=offscreen
-ExecStart=/usr/bin/qlcplus --web --nowm --operate --open /home/pi/Documents/sanctuary_lights.qxw
+ExecStart=/usr/bin/qlcplus --web --nowm --operate --open /home/pi/Documents/sanctuarydmx/sanctuary_lights.qxw
 Restart=on-failure
 RestartSec=5
 User=pi
