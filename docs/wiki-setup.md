@@ -2,9 +2,7 @@
 
 ## Overview
 
-The Sanctuary DMX wiki runs on MkDocs, a static site generator that reads plain
-Markdown files directly from disk. It is served by the Pi as a systemd service
-alongside QLC+ and is accessible from any device on the same network.
+The Sanctuary DMX wiki runs on MkDocs, a static site generator that reads plain Markdown files directly from disk. It is served by the Pi as a systemd service alongside QLC+ and is accessible from any device on the same network.
 
 **Wiki summary:**
 
@@ -42,25 +40,25 @@ at the repo root controls the site title, navigation sidebar, and theme.
 1. Write or edit a `.md` file locally
 2. Copy it to the Pi:
 
-```bash
-scp yourpage.md pi@sanctuary_dmx.local:/home/pi/wiki/docs/
-```
+    ```
+    scp yourpage.md pi@sanctuary_dmx.local:/home/pi/wiki/docs/
+    ```
 
 3. Register it in `mkdocs.yml` under the `nav` section:
 
-```yaml
-nav:
-  - Home: index.md
-  - Setup & Operations: sanctuary-dmx-setup.md
-  - Wiki Setup: wiki-setup.md
-  - Your New Page: yourpage.md
-```
+    ```
+    nav:
+      - Home: index.md
+      - Setup & Operations: sanctuary-dmx-setup.md
+      - Wiki Setup: wiki-setup.md
+      - Your New Page: yourpage.md
+    ```
 
 4. Copy the updated `mkdocs.yml` to the Pi:
 
-```bash
-scp mkdocs.yml pi@sanctuary_dmx.local:/home/pi/wiki/
-```
+    ```
+    scp mkdocs.yml pi@sanctuary_dmx.local:/home/pi/wiki/
+    ```
 
 MkDocs picks up changes automatically — no restart required.
 
@@ -75,31 +73,6 @@ Then update `mkdocs.yml` if adding a new page:
 
 ```bash
 nano ~/wiki/mkdocs.yml
-```
-
----
-
-## mkdocs.yml Reference
-
-```yaml
-site_name: Sanctuary DMX
-site_description: Setup and operations guide for the Sanctuary DMX lighting system
-site_author: Sanctuary Tech Team
-
-theme:
-  name: readthedocs
-
-nav:
-  - Home: index.md
-  - Setup & Operations: sanctuary-dmx-setup.md
-  - Wiki Setup: wiki-setup.md
-
-markdown_extensions:
-  - toc:
-      permalink: true
-  - admonition
-  - tables
-  - fenced_code
 ```
 
 ---

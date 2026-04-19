@@ -6,7 +6,9 @@ theme:
   name: readthedocs
 
 nav:
-  - Home: sanctuary-dmx-setup.md
+  - Setup: sanctuary-dmx-setup.md
+  - Operations Guide: operations-guide.md
+  - Show Design Workflow: show-design-workflow.md
   - Wiki Setup: wiki-setup.md
 
 markdown_extensions:
