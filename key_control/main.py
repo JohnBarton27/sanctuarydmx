@@ -10,8 +10,7 @@ QLC_WS = "ws://localhost:9999/qlcplusWS"
 
 DEVICE_NAME_SUBSTRING = "Composite Device Keyboard"  # partial match, case-insensitive
 
-# DMX addresses of the master dimmer channel for each fixture (universe 0)
-DIMMER_CHANNELS = [0, 10]
+DIMMER_WIDGET_ID = 0   # VirtualConsole "Both" dimmer slider (controls both fixtures)
 BRIGHTNESS_STEP = 13   # ~5% of 255
 
 
@@ -73,7 +72,7 @@ def fire_qlc_function(qlc_function):
         brightness = max(0, min(255, brightness + delta))
         print(f"\tBrightness: {round(brightness / 255 * 100)}%")
         ws = websocket.create_connection(QLC_WS)
-        ws.send(f"QLC+API|13|SLIDER|{brightness}|{brightness}")
+        ws.send(f"{DIMMER_WIDGET_ID}|{brightness}")
         ws.close()
     else:
         print("\tUnable to actually fire - this is not defined as a QlcFunction (yet!)")
@@ -134,8 +133,7 @@ def main():
             return
 
     ws = websocket.create_connection(QLC_WS)
-    for ch in DIMMER_CHANNELS:
-        ws.send(f"QLC+API|setChannelValue|0|{ch}|{brightness}")
+    ws.send(f"{DIMMER_WIDGET_ID}|{brightness}")
     ws.close()
 
     asyncio.run(read_events(device))
