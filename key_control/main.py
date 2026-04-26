@@ -10,6 +10,9 @@ QLC_WS = "ws://localhost:9999/qlcplusWS"
 
 DEVICE_NAME_SUBSTRING = "Composite Device Keyboard"  # partial match, case-insensitive
 
+DIMMER_WIDGET_ID = 0   # VirtualConsole "Both" dimmer slider
+BRIGHTNESS_STEP = 13   # ~5% of 255
+
 
 class QlcFunctions(Enum):
     BLACKOUT = 4
@@ -50,10 +53,11 @@ BUTTON_MAP = {
 
 
 current_function = None
+brightness = 255
 
 
 def fire_qlc_function(qlc_function):
-    global current_function
+    global current_function, brightness
     print(f"Firing {qlc_function}")
 
     if isinstance(qlc_function, QlcFunctions):
@@ -63,6 +67,18 @@ def fire_qlc_function(qlc_function):
         ws.send(f"QLC+API|setFunctionStatus|{qlc_function.value}|255")
         ws.close()
         current_function = qlc_function
+    elif qlc_function == "BRIGHT+":
+        brightness = min(255, brightness + BRIGHTNESS_STEP)
+        print(f"\tBrightness: {round(brightness / 255 * 100)}%")
+        ws = websocket.create_connection(QLC_WS)
+        ws.send(f"QLC+API|setWidgetValue|{DIMMER_WIDGET_ID}|{brightness}")
+        ws.close()
+    elif qlc_function == "BRIGHT-":
+        brightness = max(0, brightness - BRIGHTNESS_STEP)
+        print(f"\tBrightness: {round(brightness / 255 * 100)}%")
+        ws = websocket.create_connection(QLC_WS)
+        ws.send(f"QLC+API|setWidgetValue|{DIMMER_WIDGET_ID}|{brightness}")
+        ws.close()
     else:
         print("\tUnable to actually fire - this is not defined as a QlcFunction (yet!)")
 
