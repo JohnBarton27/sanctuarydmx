@@ -37,18 +37,18 @@
   </Fixture>
   <Function ID="0" Type="Scene" Name="Red">
    <Speed FadeIn="2000" FadeOut="2000" Duration="0"/>
-   <FixtureVal ID="0">1,255</FixtureVal>
-   <FixtureVal ID="1">1,255</FixtureVal>
+   <FixtureVal ID="0">1,255,2,0,3,0,4,0,5,0</FixtureVal>
+   <FixtureVal ID="1">1,255,2,0,3,0,4,0,5,0</FixtureVal>
   </Function>
   <Function ID="1" Type="Scene" Name="Green">
    <Speed FadeIn="2000" FadeOut="2000" Duration="0"/>
-   <FixtureVal ID="0">2,255</FixtureVal>
-   <FixtureVal ID="1">2,255</FixtureVal>
+   <FixtureVal ID="0">1,0,2,255,3,0,4,0,5,0</FixtureVal>
+   <FixtureVal ID="1">1,0,2,255,3,0,4,0,5,0</FixtureVal>
   </Function>
   <Function ID="2" Type="Scene" Name="Blue">
    <Speed FadeIn="2000" FadeOut="2000" Duration="0"/>
-   <FixtureVal ID="0">3,255</FixtureVal>
-   <FixtureVal ID="1">3,255</FixtureVal>
+   <FixtureVal ID="0">1,0,2,0,3,255,4,0,5,0</FixtureVal>
+   <FixtureVal ID="1">1,0,2,0,3,255,4,0,5,0</FixtureVal>
   </Function>
   <Function ID="3" Type="Scene" Name="Light Blue">
    <Speed FadeIn="2000" FadeOut="2000" Duration="0"/>
