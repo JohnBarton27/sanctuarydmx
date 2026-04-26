@@ -54,6 +54,18 @@ BUTTON_MAP = {
 
 current_function = None
 brightness = 255
+_ws = None
+
+
+def send(message):
+    global _ws
+    try:
+        if _ws is None:
+            _ws = websocket.create_connection(QLC_WS)
+        _ws.send(message)
+    except Exception:
+        _ws = websocket.create_connection(QLC_WS)
+        _ws.send(message)
 
 
 def fire_qlc_function(qlc_function):
@@ -61,19 +73,15 @@ def fire_qlc_function(qlc_function):
     print(f"Firing {qlc_function}")
 
     if isinstance(qlc_function, QlcFunctions):
-        ws = websocket.create_connection(QLC_WS)
         if current_function is not None and current_function != qlc_function:
-            ws.send(f"QLC+API|setFunctionStatus|{current_function.value}|0")
-        ws.send(f"QLC+API|setFunctionStatus|{qlc_function.value}|255")
-        ws.close()
+            send(f"QLC+API|setFunctionStatus|{current_function.value}|0")
+        send(f"QLC+API|setFunctionStatus|{qlc_function.value}|255")
         current_function = qlc_function
     elif qlc_function in ("BRIGHT+", "BRIGHT-"):
         delta = BRIGHTNESS_STEP if qlc_function == "BRIGHT+" else -BRIGHTNESS_STEP
         brightness = max(0, min(255, brightness + delta))
         print(f"\tBrightness: {round(brightness / 255 * 100)}%")
-        ws = websocket.create_connection(QLC_WS)
-        ws.send(f"{DIMMER_WIDGET_ID}|{brightness}")
-        ws.close()
+        send(f"{DIMMER_WIDGET_ID}|{brightness}")
     else:
         print("\tUnable to actually fire - this is not defined as a QlcFunction (yet!)")
 
