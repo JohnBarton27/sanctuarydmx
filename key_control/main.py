@@ -8,7 +8,7 @@ import websocket
 
 QLC_WS = "ws://localhost:9999/qlcplusWS"
 
-DEVICE_NAME_SUBSTRING = "macro"  # partial match, case-insensitive — adjust to your keypad's name
+DEVICE_NAME_SUBSTRING = "Composite Device Keyboard"  # partial match, case-insensitive
 
 
 class QlcFunctions(Enum):
