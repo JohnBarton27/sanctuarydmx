@@ -22,7 +22,24 @@ class QlcFunctions(Enum):
 # Map evdev key code → QLC+ function
 # Use KEY_* constants from evdev.ecodes, e.g. ecodes.KEY_1, ecodes.KEY_F1
 BUTTON_MAP = {
-    ecodes.KEY_1: QlcFunctions.BLACKOUT,
+    ecodes.KEY_A: QlcFunctions.BLACKOUT,
+    ecodes.KEY_B: "WHITE",
+    ecodes.KEY_C: "PINK",
+    ecodes.KEY_D: "RED",
+    ecodes.KEY_E: "AMBER",
+    ecodes.KEY_F: "WARM WHITE",
+    ecodes.KEY_G: "GREEN",
+    ecodes.KEY_H: "TEAL",
+    ecodes.KEY_I: "LIGHT BLUE",
+    ecodes.KEY_J: "BLUE",
+    ecodes.KEY_K: "PURPLE",
+    ecodes.KEY_L: "FX1",
+    ecodes.KEY_1: "BRIGHT-",
+    ecodes.KEY_2: "BRIGHT_PUSH",
+    ecodes.KEY_3: "BRIGHT+",
+    ecodes.KEY_4: "BOTTOM_KNOB_LEFT",
+    ecodes.KEY_5: "BOTTOM_KNOB_PUSH",
+    ecodes.KEY_6: "BOTTOM_KNOB_RIGHT"
 }
 
 
