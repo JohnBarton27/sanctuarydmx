@@ -50,6 +50,8 @@ def fire_qlc_function(qlc_function):
         ws = websocket.create_connection(QLC_WS)
         ws.send(f"QLC+API|setFunctionStatus|{qlc_function.value}|255")
         ws.close()
+    else:
+        print("\tUnable to actually fire - this is not defined as a QlcFunction (yet!)")
 
 
 def list_devices():
