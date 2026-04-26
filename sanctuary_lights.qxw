@@ -81,6 +81,36 @@
    <FixtureVal ID="0">0,255,1,0,2,0,3,0,4,80,5,220</FixtureVal>
    <FixtureVal ID="1">0,255,1,0,2,0,3,0,4,80,5,220</FixtureVal>
   </Function>
+  <Function ID="10" Type="Scene" Name="White">
+   <Speed FadeIn="2000" FadeOut="2000" Duration="0"/>
+   <FixtureVal ID="0">1,0,2,0,3,0,4,0,5,255</FixtureVal>
+   <FixtureVal ID="1">1,0,2,0,3,0,4,0,5,255</FixtureVal>
+  </Function>
+  <Function ID="11" Type="Scene" Name="Pink">
+   <Speed FadeIn="2000" FadeOut="2000" Duration="0"/>
+   <FixtureVal ID="0">1,255,2,0,3,150,4,0,5,0</FixtureVal>
+   <FixtureVal ID="1">1,255,2,0,3,150,4,0,5,0</FixtureVal>
+  </Function>
+  <Function ID="12" Type="Scene" Name="Amber">
+   <Speed FadeIn="2000" FadeOut="2000" Duration="0"/>
+   <FixtureVal ID="0">1,0,2,0,3,0,4,255,5,0</FixtureVal>
+   <FixtureVal ID="1">1,0,2,0,3,0,4,255,5,0</FixtureVal>
+  </Function>
+  <Function ID="13" Type="Scene" Name="Warm White">
+   <Speed FadeIn="2000" FadeOut="2000" Duration="0"/>
+   <FixtureVal ID="0">1,0,2,0,3,0,4,80,5,220</FixtureVal>
+   <FixtureVal ID="1">1,0,2,0,3,0,4,80,5,220</FixtureVal>
+  </Function>
+  <Function ID="14" Type="Scene" Name="Teal">
+   <Speed FadeIn="2000" FadeOut="2000" Duration="0"/>
+   <FixtureVal ID="0">1,0,2,200,3,180,4,0,5,0</FixtureVal>
+   <FixtureVal ID="1">1,0,2,200,3,180,4,0,5,0</FixtureVal>
+  </Function>
+  <Function ID="15" Type="Scene" Name="Purple">
+   <Speed FadeIn="2000" FadeOut="2000" Duration="0"/>
+   <FixtureVal ID="0">1,150,2,0,3,255,4,0,5,0</FixtureVal>
+   <FixtureVal ID="1">1,150,2,0,3,255,4,0,5,0</FixtureVal>
+  </Function>
   <Function ID="9" Type="Chaser" Name="Color Cycle">
    <Speed FadeIn="4000" FadeOut="4000" Duration="6000"/>
    <Direction>Forward</Direction>

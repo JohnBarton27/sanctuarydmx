@@ -17,22 +17,28 @@ class QlcFunctions(Enum):
     GREEN = 1
     BLUE = 2
     LIGHT_BLUE = 3
+    WHITE = 10
+    PINK = 11
+    AMBER = 12
+    WARM_WHITE = 13
+    TEAL = 14
+    PURPLE = 15
 
 
 # Map evdev key code → QLC+ function
 # Use KEY_* constants from evdev.ecodes, e.g. ecodes.KEY_1, ecodes.KEY_F1
 BUTTON_MAP = {
     ecodes.KEY_A: QlcFunctions.BLACKOUT,
-    ecodes.KEY_B: "WHITE",
-    ecodes.KEY_C: "PINK",
+    ecodes.KEY_B: QlcFunctions.WHITE,
+    ecodes.KEY_C: QlcFunctions.PINK,
     ecodes.KEY_D: QlcFunctions.RED,
-    ecodes.KEY_E: "AMBER",
-    ecodes.KEY_F: "WARM WHITE",
+    ecodes.KEY_E: QlcFunctions.AMBER,
+    ecodes.KEY_F: QlcFunctions.WARM_WHITE,
     ecodes.KEY_G: QlcFunctions.GREEN,
-    ecodes.KEY_H: "TEAL",
+    ecodes.KEY_H: QlcFunctions.TEAL,
     ecodes.KEY_I: QlcFunctions.LIGHT_BLUE,
     ecodes.KEY_J: QlcFunctions.BLUE,
-    ecodes.KEY_K: "PURPLE",
+    ecodes.KEY_K: QlcFunctions.PURPLE,
     ecodes.KEY_L: "FX1",
     ecodes.KEY_1: "BRIGHT-",
     ecodes.KEY_2: "BRIGHT_PUSH",
