@@ -72,6 +72,48 @@ sudo systemctl start qlcplus
 
 > Update the `--open` path to match the actual project filename once a show has been created.
 
+### 6. Set Up the Macro Keypad Controller
+
+The `key_control` script reads the USB macro keypad and sends lighting commands to QLC+ over WebSocket.
+
+**Deploy the files:**
+
+```bash
+scp -r key_control pi@sanctuary_dmx.local:/home/pi/Documents/sanctuarydmx/
+```
+
+**Create a Python virtual environment and install dependencies:**
+
+```bash
+ssh pi@sanctuary_dmx.local
+cd /home/pi/Documents/sanctuarydmx/key_control
+python3 -m venv venv
+venv/bin/pip install -r requirements.txt
+```
+
+**Allow the `pi` user to read input devices:**
+
+```bash
+sudo usermod -aG input pi
+```
+
+Log out and back in (or reboot) for the group change to take effect.
+
+**Install and enable the service:**
+
+```bash
+sudo cp /home/pi/Documents/sanctuarydmx/setup/key_control.service /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable key_control
+sudo systemctl start key_control
+```
+
+**Verify it's running:**
+
+```bash
+sudo systemctl status key_control
+```
+
 ---
 
 ## Network Configuration
@@ -133,3 +175,6 @@ sudo reboot
 | Web interface unreachable | Service not running, or Pi still booting | Wait 90 seconds; check `systemctl status qlcplus` |
 | Virtual console unresponsive | QLC+ in design mode | Ensure `--operate` flag is in the service `ExecStart` line |
 | Can't SSH in | SSH not enabled, or wrong hostname | Connect monitor/keyboard and run `sudo raspi-config` |
+| Keypad has no effect | `key_control` service not running | Check `systemctl status key_control`; check `journalctl -u key_control -n 50` |
+| Keypad device not found | Keypad unplugged, or wrong device name | Confirm USB connection; run `python main.py --list-devices` to verify device name |
+| Permission denied on `/dev/input` | `pi` user not in `input` group | Run `sudo usermod -aG input pi` and reboot |
