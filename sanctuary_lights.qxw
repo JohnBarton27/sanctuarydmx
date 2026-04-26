@@ -252,7 +252,7 @@
      <Input Universe="0" Channel="0"/>
      <SliderMode ValueDisplayStyle="Exact" ClickAndGoType="None" Monitor="true">Level</SliderMode>
      <Reset/>
-     <Level LowLimit="0" HighLimit="255" Value="0">
+     <Level LowLimit="0" HighLimit="255" Value="255">
       <Channel Fixture="0">0</Channel>
       <Channel Fixture="1">0</Channel>
      </Level>
