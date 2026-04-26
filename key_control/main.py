@@ -73,8 +73,7 @@ def fire_qlc_function(qlc_function):
         brightness = max(0, min(255, brightness + delta))
         print(f"\tBrightness: {round(brightness / 255 * 100)}%")
         ws = websocket.create_connection(QLC_WS)
-        for ch in DIMMER_CHANNELS:
-            ws.send(f"QLC+API|setChannelValue|0|{ch}|{brightness}")
+        ws.send(f"QLC+API|13|SLIDER|{brightness}|{brightness}")
         ws.close()
     else:
         print("\tUnable to actually fire - this is not defined as a QlcFunction (yet!)")
