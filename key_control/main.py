@@ -1,9 +1,14 @@
+import argparse
+import asyncio
 from enum import Enum
-from gpiozero import Button
-import time
+
+import evdev
+from evdev import ecodes
 import websocket
 
 QLC_WS = "ws://localhost:9999/qlcplusWS"
+
+DEVICE_NAME_SUBSTRING = "macro"  # partial match, case-insensitive — adjust to your keypad's name
 
 
 class QlcFunctions(Enum):
@@ -14,9 +19,10 @@ class QlcFunctions(Enum):
     LIGHT_BLUE = 3
 
 
-# Map GPIO pin → QLC+ function ID
+# Map evdev key code → QLC+ function
+# Use KEY_* constants from evdev.ecodes, e.g. ecodes.KEY_1, ecodes.KEY_F1
 BUTTON_MAP = {
-    4: QlcFunctions.BLACKOUT,   # GPIO4 → QLC function ID 1
+    ecodes.KEY_1: QlcFunctions.BLACKOUT,
 }
 
 
@@ -27,12 +33,59 @@ def fire_qlc_function(qlc_function):
     ws.close()
 
 
-buttons = {}
-for pin, func in BUTTON_MAP.items():
-    btn = Button(pin, pull_up=True, bounce_time=0.05)
-    btn.when_pressed = lambda function=func: fire_qlc_function(function)
-    buttons[pin] = btn
+def list_devices():
+    devices = [evdev.InputDevice(path) for path in evdev.list_devices()]
+    if not devices:
+        print("No input devices found.")
+        return
+    print(f"{'Path':<25} {'Name':<40} {'Phys'}")
+    print("-" * 80)
+    for d in devices:
+        print(f"{d.path:<25} {d.name:<40} {d.phys}")
 
-print("Macro pad running. Press Ctrl+C to stop.")
-while True:
-    time.sleep(1)
+
+def find_device(name_substring):
+    for path in evdev.list_devices():
+        d = evdev.InputDevice(path)
+        if name_substring.lower() in d.name.lower():
+            return d
+    return None
+
+
+async def read_events(device):
+    print(f"Listening on: {device.path} ({device.name})")
+    print("Press Ctrl+C to stop.")
+    async for event in device.async_read_loop():
+        if event.type == ecodes.EV_KEY:
+            key_event = evdev.categorize(event)
+            if key_event.keystate == evdev.KeyEvent.key_down:
+                code = key_event.scancode
+                if code in BUTTON_MAP:
+                    fire_qlc_function(BUTTON_MAP[code])
+                else:
+                    print(f"Unmapped key: {key_event.keycode} (code {code})")
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Macro keypad → QLC+ DMX controller")
+    parser.add_argument("--list-devices", action="store_true", help="List all input devices and exit")
+    parser.add_argument("--device", help="Device path (e.g. /dev/input/event5); auto-detected if omitted")
+    args = parser.parse_args()
+
+    if args.list_devices:
+        list_devices()
+        return
+
+    if args.device:
+        device = evdev.InputDevice(args.device)
+    else:
+        device = find_device(DEVICE_NAME_SUBSTRING)
+        if device is None:
+            print(f"No device found matching '{DEVICE_NAME_SUBSTRING}'. Run with --list-devices to see options.")
+            return
+
+    asyncio.run(read_events(device))
+
+
+if __name__ == "__main__":
+    main()
