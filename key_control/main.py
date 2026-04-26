@@ -49,13 +49,20 @@ BUTTON_MAP = {
 }
 
 
+current_function = None
+
+
 def fire_qlc_function(qlc_function):
+    global current_function
     print(f"Firing {qlc_function}")
 
     if isinstance(qlc_function, QlcFunctions):
         ws = websocket.create_connection(QLC_WS)
+        if current_function is not None and current_function != qlc_function:
+            ws.send(f"QLC+API|setFunctionStatus|{current_function.value}|0")
         ws.send(f"QLC+API|setFunctionStatus|{qlc_function.value}|255")
         ws.close()
+        current_function = qlc_function
     else:
         print("\tUnable to actually fire - this is not defined as a QlcFunction (yet!)")
 
