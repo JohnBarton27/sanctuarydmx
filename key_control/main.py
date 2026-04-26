@@ -10,7 +10,7 @@ QLC_WS = "ws://localhost:9999/qlcplusWS"
 
 DEVICE_NAME_SUBSTRING = "Composite Device Keyboard"  # partial match, case-insensitive
 
-DIMMER_WIDGET_ID = 0   # VirtualConsole "Both" dimmer slider (controls both fixtures)
+DIMMER_WIDGET_ID = 13   # VirtualConsole "Both" dimmer slider (controls both fixtures)
 BRIGHTNESS_STEP = 13   # ~5% of 255
 
 
