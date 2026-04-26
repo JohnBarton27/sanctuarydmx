@@ -10,7 +10,8 @@ QLC_WS = "ws://localhost:9999/qlcplusWS"
 
 DEVICE_NAME_SUBSTRING = "Composite Device Keyboard"  # partial match, case-insensitive
 
-DIMMER_WIDGET_ID = 0   # VirtualConsole "Both" dimmer slider
+# DMX addresses of the master dimmer channel for each fixture (universe 0)
+DIMMER_CHANNELS = [0, 10]
 BRIGHTNESS_STEP = 13   # ~5% of 255
 
 
@@ -67,17 +68,13 @@ def fire_qlc_function(qlc_function):
         ws.send(f"QLC+API|setFunctionStatus|{qlc_function.value}|255")
         ws.close()
         current_function = qlc_function
-    elif qlc_function == "BRIGHT+":
-        brightness = min(255, brightness + BRIGHTNESS_STEP)
+    elif qlc_function in ("BRIGHT+", "BRIGHT-"):
+        delta = BRIGHTNESS_STEP if qlc_function == "BRIGHT+" else -BRIGHTNESS_STEP
+        brightness = max(0, min(255, brightness + delta))
         print(f"\tBrightness: {round(brightness / 255 * 100)}%")
         ws = websocket.create_connection(QLC_WS)
-        ws.send(f"QLC+API|setWidgetValue|{DIMMER_WIDGET_ID}|{brightness}")
-        ws.close()
-    elif qlc_function == "BRIGHT-":
-        brightness = max(0, brightness - BRIGHTNESS_STEP)
-        print(f"\tBrightness: {round(brightness / 255 * 100)}%")
-        ws = websocket.create_connection(QLC_WS)
-        ws.send(f"QLC+API|setWidgetValue|{DIMMER_WIDGET_ID}|{brightness}")
+        for ch in DIMMER_CHANNELS:
+            ws.send(f"QLC+API|setChannelValue|0|{ch}|{brightness}")
         ws.close()
     else:
         print("\tUnable to actually fire - this is not defined as a QlcFunction (yet!)")
@@ -110,10 +107,13 @@ async def read_events(device):
             key_event = evdev.categorize(event)
             if key_event.keystate == evdev.KeyEvent.key_down:
                 code = key_event.scancode
-                if code in BUTTON_MAP:
-                    fire_qlc_function(BUTTON_MAP[code])
-                else:
-                    print(f"Unmapped key: {key_event.keycode} (code {code})")
+                try:
+                    if code in BUTTON_MAP:
+                        fire_qlc_function(BUTTON_MAP[code])
+                    else:
+                        print(f"Unmapped key: {key_event.keycode} (code {code})")
+                except Exception as e:
+                    print(f"Error handling key {key_event.keycode}: {e}")
 
 
 def main():
@@ -133,6 +133,11 @@ def main():
         if device is None:
             print(f"No device found matching '{DEVICE_NAME_SUBSTRING}'. Run with --list-devices to see options.")
             return
+
+    ws = websocket.create_connection(QLC_WS)
+    for ch in DIMMER_CHANNELS:
+        ws.send(f"QLC+API|setChannelValue|0|{ch}|{brightness}")
+    ws.close()
 
     asyncio.run(read_events(device))
 
