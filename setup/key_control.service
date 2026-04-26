@@ -1,0 +1,13 @@
+[Unit]
+Description=Macro keypad → QLC+ DMX controller
+After=network.target qlcplus.service
+Requires=qlcplus.service
+
+[Service]
+ExecStart=/home/pi/Documents/sanctuarydmx/key_control/venv/bin/python /home/pi/Documents/sanctuarydmx/key_control/main.py
+Restart=on-failure
+RestartSec=5
+User=pi
+
+[Install]
+WantedBy=multi-user.target
